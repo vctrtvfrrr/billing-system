@@ -1,0 +1,21 @@
+{
+  "name": "@vctrtvfrrr/billing-system",
+  "version": "1.0.0",
+  "description": "PoC de um sistema de cobranças baseado em disparos de e-mails com boletos.",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vctrtvfrrr/billing-system.git"
+  },
+  "author": "Victor Ferreira <victor@ferreira.id>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vctrtvfrrr/billing-system/issues"
+  },
+  "homepage": "https://github.com/vctrtvfrrr/billing-system#readme",
+  "devDependencies": {
+    "husky": "^8.0.3"
+  }
+}
