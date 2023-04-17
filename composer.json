@@ -19,10 +19,16 @@
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.13",
-    "swoole/ide-helper": "^5.0"
+    "swoole/ide-helper": "^5.0",
+    "pestphp/pest": "^2.5"
   },
   "scripts": {
     "lint": "php-cs-fixer fix --diff --verbose --dry-run .",
     "lint-fix": "php-cs-fixer fix"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
   }
 }
