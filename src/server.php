@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+use FastRoute\Dispatcher;
 use Swoole\Http\Request;
 use Swoole\Http\Response;
 
 $routes = require __DIR__.'/routes.php';
 $dispatcher = FastRoute\simpleDispatcher($routes);
 
-function handleRequest($dispatcher, string $requestMethod, string $requestUri)
+function handleRequest(Dispatcher $dispatcher, Request $request, Response $response)
 {
-    [$code, $handler, $vars] = $dispatcher->dispatch($requestMethod, $requestUri);
+    [$code, $handler, $vars] = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);
 
     switch ($code) {
         case FastRoute\Dispatcher::FOUND:
-            $result = call_user_func($handler, $vars);
+            $result = call_user_func($handler, $request, $response, $vars);
 
             break;
 
@@ -26,7 +27,7 @@ function handleRequest($dispatcher, string $requestMethod, string $requestUri)
                 'status'  => 405,
                 'message' => 'Method Not Allowed',
                 'errors'  => [
-                    sprintf('Method "%s" is not allowed', $requestMethod),
+                    sprintf('Method "%s" is not allowed', $_SERVER['REQUEST_METHOD']),
                 ],
             ];
 
@@ -38,7 +39,7 @@ function handleRequest($dispatcher, string $requestMethod, string $requestUri)
                 'status'  => 404,
                 'message' => 'Not Found',
                 'errors'  => [
-                    sprintf('The URI "%s" was not found', $requestUri),
+                    sprintf('The URI "%s" was not found', $_SERVER['REQUEST_URI']),
                 ],
             ];
 
@@ -69,7 +70,7 @@ return function (Request $request, Response $response) use ($dispatcher): void {
 
     $response->header('Content-Type', 'application/json');
 
-    $result = handleRequest($dispatcher, $requestMethod, $requestUri);
+    $response = handleRequest($dispatcher, $request, $response);
 
-    $response->end(json_encode($result));
+    $response->end();
 };
