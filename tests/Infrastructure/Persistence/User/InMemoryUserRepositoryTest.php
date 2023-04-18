@@ -34,7 +34,7 @@ class InMemoryUserRepositoryTest extends TestCase
 
         $userRepository = new InMemoryUserRepository();
 
-        $this->assertSame(array_values($users), $userRepository->findAll());
+        $this->assertEqualsCanonicalizing(array_values($users), $userRepository->findAll());
     }
 
     /** @test */
