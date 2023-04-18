@@ -14,6 +14,7 @@
     "ext-json": "*",
     "monolog/monolog": "^3.3",
     "php-di/php-di": "^7.0",
+    "robmorgan/phinx": "^0.13.4",
     "slim/psr7": "^1.6",
     "slim/slim": "^4.11",
     "vlucas/phpdotenv": "^5.5"
@@ -24,7 +25,8 @@
     "phpspec/prophecy-phpunit": "^2.0",
     "phpstan/extension-installer": "^1.2.0",
     "phpstan/phpstan": "^1.10",
-    "phpunit/phpunit": "^9.6.4"
+    "phpunit/phpunit": "^9.6.4",
+    "symfony/yaml": "^6.2"
   },
   "config": {
     "allow-plugins": {
