@@ -3,11 +3,6 @@
   "description": "PoC de um sistema de cobranças baseado em disparos de e-mails com boletos.",
   "type": "project",
   "license": "MIT",
-  "autoload": {
-    "psr-4": {
-      "App\\": "src/"
-    }
-  },
   "authors": [
     {
       "name": "Victor Ferreira",
