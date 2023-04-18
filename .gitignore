@@ -18,3 +18,5 @@ cache.properties
 # Composer
 composer.phar
 composer.lock
+# Environment
+.env
