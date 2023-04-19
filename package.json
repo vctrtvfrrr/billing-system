@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/vctrtvfrrr/billing-system#readme",
   "devDependencies": {
+    "chokidar": "^3.5.3",
     "husky": "^8.0.3"
   }
 }
