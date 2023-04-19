@@ -24,7 +24,7 @@ class StoreChargeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'charges' => ['file', 'mimetypes:text/csv'],
+            'charges' => ['required', 'file', 'mimetypes:text/csv'],
         ];
     }
 }
