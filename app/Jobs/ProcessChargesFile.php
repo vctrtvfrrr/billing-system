@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Mail\ChargesFileProcessed;
 use App\Models\Customer;
 use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
@@ -36,12 +37,12 @@ class ProcessChargesFile implements ShouldQueue
             return;
         }
 
-        $firstCsvFile = Storage::path($csvFiles[0]);
+        $currentCsvFile = $csvFiles[0];
 
-        $handle = fopen($firstCsvFile, 'r');
+        $handle = fopen(Storage::path($currentCsvFile), 'r');
 
         if ($handle === false) {
-            Log::error("Não foi possível abrir o arquivo CSV {$csvFiles[0]} para leitura.");
+            Log::error("Não foi possível abrir o arquivo CSV {$currentCsvFile} para leitura.");
 
             return;
         }
@@ -71,12 +72,14 @@ class ProcessChargesFile implements ShouldQueue
                 );
             } catch (\Throwable $th) {
                 Log::error($th->getMessage());
-                Log::error("Não foi possível processar os dados do arquivo CSV {$csvFiles[0]} na linha {$currentLine}.");
+                Log::error("Não foi possível processar os dados do arquivo CSV {$currentCsvFile} na linha {$currentLine}.");
             }
         }
 
         fclose($handle);
 
-        // Mail::queue(new MailChargeCustomer($this->charge, $invoice));
+        Mail::queue(new ChargesFileProcessed($currentCsvFile));
+
+        Storage::delete($currentCsvFile);
     }
 }
