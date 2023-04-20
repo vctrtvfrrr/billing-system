@@ -19,10 +19,11 @@ namespace App\Models{
  * @property string $name
  * @property string $government_id
  * @property string $email
- * @property string $debt_amount
- * @property string $debt_due_date
+ * @property float $debt_amount
+ * @property \Illuminate\Support\Carbon $debt_due_date
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\ChargeFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Charge newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Charge newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Charge query()
@@ -41,6 +42,26 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\Invoice
+ *
+ * @property int $id
+ * @property string $filename
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\InvoiceFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereFilename($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice whereUpdatedAt($value)
+ */
+	class Invoice extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\User
  *
  * @property int $id
@@ -53,8 +74,6 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
- * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
