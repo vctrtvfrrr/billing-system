@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use App\Mail\ChargeCustomer as MailChargeCustomer;
-use App\Models\Charge;
+use App\Models\Invoice;
 use App\Services\InvoiceService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -24,7 +24,7 @@ class ChargeCustomer implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Charge $charge)
+    public function __construct(public Invoice $invoice)
     {
     }
 
@@ -33,8 +33,8 @@ class ChargeCustomer implements ShouldQueue
      */
     public function handle(InvoiceService $invoiceService): void
     {
-        $invoice = $invoiceService->handle($this->charge);
+        $invoice = $invoiceService->handle($this->invoice);
 
-        Mail::queue(new MailChargeCustomer($this->charge, $invoice));
+        Mail::queue(new MailChargeCustomer($invoice));
     }
 }

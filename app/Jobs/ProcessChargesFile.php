@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\Charge;
+use App\Models\Customer;
+use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -51,9 +53,22 @@ class ProcessChargesFile implements ShouldQueue
 
         while (($data = fgetcsv($handle)) !== false) {
             $currentLine++;
+            $data = array_combine($header, $data);
 
             try {
-                Charge::create(array_combine($header, $data));
+                $customer = Customer::create([
+                    'name'          => $data['name'],
+                    'government_id' => $data['government_id'],
+                    'email'         => $data['email'],
+                ]);
+
+                $customer->invoice()->save(
+                    new Invoice([
+                        'debt_id'       => $data['debt_id'],
+                        'debt_amount'   => $data['debt_amount'],
+                        'debt_due_date' => $data['debt_due_date'],
+                    ])
+                );
             } catch (\Throwable $th) {
                 Log::error($th->getMessage());
                 Log::error("Não foi possível processar os dados do arquivo CSV {$csvFiles[0]} na linha {$currentLine}.");
@@ -61,5 +76,7 @@ class ProcessChargesFile implements ShouldQueue
         }
 
         fclose($handle);
+
+        // Mail::queue(new MailChargeCustomer($this->charge, $invoice));
     }
 }

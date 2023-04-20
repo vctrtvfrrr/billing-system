@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Mail;
 
-use App\Models\Charge;
 use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
@@ -22,10 +21,8 @@ class ChargeCustomer extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(
-        public Charge $charge,
-        public Invoice $invoice
-    ) {
+    public function __construct(public Invoice $invoice)
+    {
     }
 
     /**
@@ -34,7 +31,7 @@ class ChargeCustomer extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            to: [new Address($this->charge->email, $this->charge->name)],
+            to: [new Address($this->invoice->customer->email, $this->invoice->customer->name)],
             subject: 'Sua fatura chegou',
         );
     }

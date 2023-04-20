@@ -6,7 +6,7 @@ namespace Tests\Feature\Jobs;
 
 use App\Jobs\ProcessDailyCharges;
 use App\Mail\ChargeCustomer;
-use App\Models\Charge;
+use App\Models\Customer;
 use App\Models\Invoice;
 use App\Services\InvoiceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -31,9 +31,9 @@ class ChargeCustomerTest extends TestCase
             ;
         });
 
-        $charge = Charge::factory()->create();
+        $customer = Customer::factory()->create();
 
-        $job = resolve(ProcessDailyCharges::class, ['charge' => $charge]);
+        $job = resolve(ProcessDailyCharges::class, ['customer' => $customer]);
         app()->call([$job, 'handle']);
 
         Mail::assertQueued(ChargeCustomer::class);

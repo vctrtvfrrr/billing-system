@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\Charge;
 use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -20,18 +19,18 @@ class InvoiceService
     protected string $customerDocument;
     protected string $customerEmail;
 
-    public function handle(Charge $charge): Invoice
+    public function handle(Invoice $invoice): Invoice
     {
-        $this->setId($charge->debt_id);
-        $this->setAmount($charge->debt_amount);
-        $this->setDueDate($charge->debt_due_date);
-        $this->setCustomerName($charge->name);
-        $this->setcustomerDocument($charge->government_id);
-        $this->setCustomerEmail($charge->email);
+        $this->setId($invoice->debt_id);
+        $this->setAmount($invoice->debt_amount);
+        $this->setDueDate($invoice->debt_due_date);
+        $this->setCustomerName($invoice->customer->name);
+        $this->setcustomerDocument($invoice->customer->government_id);
+        $this->setCustomerEmail($invoice->customer->email);
 
-        $invoiceFile = $this->generateInvoiceFile();
+        $invoice->filename = $this->generateInvoiceFile();
 
-        return Invoice::create(['filename' => $invoiceFile]);
+        return $invoice;
     }
 
     protected function setId(int $id): void

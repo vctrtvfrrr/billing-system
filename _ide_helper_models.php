@@ -12,32 +12,16 @@
 
 namespace App\Models{
 /**
- * App\Models\Charge
+ * App\Models\Customer
  *
- * @property int $id
- * @property int $debt_id
- * @property string $name
- * @property string $government_id
- * @property string $email
- * @property float $debt_amount
- * @property \Illuminate\Support\Carbon $debt_due_date
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Database\Factories\ChargeFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Charge newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Charge newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Charge query()
- * @method static \Illuminate\Database\Eloquent\Builder|Charge whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Charge whereDebtAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Charge whereDebtDueDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Charge whereDebtId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Charge whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Charge whereGovernmentId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Charge whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Charge whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Charge whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Invoice> $invoice
+ * @property-read int|null $invoice_count
+ * @method static \Database\Factories\CustomerFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Customer newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Customer newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Customer query()
  */
-	class Charge extends \Eloquent {}
+	class Customer extends \Eloquent {}
 }
 
 namespace App\Models{
@@ -48,6 +32,7 @@ namespace App\Models{
  * @property string $filename
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Customer|null $customer
  * @method static \Database\Factories\InvoiceFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Invoice newQuery()

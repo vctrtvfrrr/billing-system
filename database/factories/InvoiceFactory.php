@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,12 @@ class InvoiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'filename' => 'invoices/invoice-'.$this->faker->randomNumber(4).'.pdf',
+            'customer_id'   => Customer::factory(),
+            'debt_id'       => $this->faker->randomNumber(4),
+            'debt_amount'   => $this->faker->randomFloat(2, 100, 10000),
+            'debt_due_date' => now()->addDays(7),
+            'paid_at'       => null,
+            'filename'      => 'invoices/invoice-'.$this->faker->randomNumber(4).'.pdf',
         ];
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Services;
 
-use App\Models\Charge;
+use App\Models\Invoice;
 use App\Services\InvoiceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -19,10 +19,10 @@ class InvoiceServiceTest extends TestCase
     {
         Storage::fake();
 
-        $charge = Charge::factory()->create();
+        $invoice = Invoice::factory()->create();
 
         $job = resolve(InvoiceService::class);
-        $invoice = app()->call([$job, 'handle'], ['charge' => $charge]);
+        $invoice = app()->call([$job, 'handle'], ['invoice' => $invoice]);
 
         Storage::assertExists($invoice->filename);
     }

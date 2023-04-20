@@ -25,6 +25,7 @@ class ProcessChargesFileTest extends TestCase
         $job = resolve(ProcessChargesFile::class);
         app()->call([$job, 'handle']);
 
-        $this->assertDatabaseCount('charges', $csvNumRecords);
+        $this->assertDatabaseCount('customers', $csvNumRecords);
+        $this->assertDatabaseCount('invoices', $csvNumRecords);
     }
 }

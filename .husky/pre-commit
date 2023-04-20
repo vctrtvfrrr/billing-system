@@ -2,4 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 composer ide-helper
+git add _ide_helper_models.php _ide_helper.php
 composer lint
+composer analysis

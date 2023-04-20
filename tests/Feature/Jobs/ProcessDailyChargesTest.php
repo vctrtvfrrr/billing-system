@@ -6,7 +6,7 @@ namespace Tests\Feature\Jobs;
 
 use App\Jobs\ChargeCustomer;
 use App\Jobs\ProcessDailyCharges;
-use App\Models\Charge;
+use App\Models\Invoice;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
@@ -20,7 +20,7 @@ class ProcessDailyChargesTest extends TestCase
     {
         Queue::fake();
 
-        Charge::factory()->count(3)->create();
+        Invoice::factory()->count(3)->create();
 
         $job = resolve(ProcessDailyCharges::class);
         app()->call([$job, 'handle']);

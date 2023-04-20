@@ -12,14 +12,11 @@ return new class() extends Migration {
      */
     public function up(): void
     {
-        Schema::create('charges', function (Blueprint $table): void {
+        Schema::create('customers', function (Blueprint $table): void {
             $table->id();
-            $table->unsignedInteger('debt_id');
             $table->string('name', 100);
             $table->string('government_id', 11);
             $table->string('email', 100);
-            $table->unsignedDecimal(column: 'debt_amount', total: 10, places: 2);
-            $table->date('debt_due_date');
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class() extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('charges');
+        Schema::dropIfExists('customers');
     }
 };

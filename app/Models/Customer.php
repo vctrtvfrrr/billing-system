@@ -6,8 +6,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Charge extends Model
+class Customer extends Model
 {
     use HasFactory;
 
@@ -17,22 +18,13 @@ class Charge extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'debt_id',
         'name',
         'government_id',
         'email',
-        'debt_amount',
-        'debt_due_date',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'debt_id'       => 'integer',
-        'debt_amount'   => 'float',
-        'debt_due_date' => 'date',
-    ];
+    public function invoice(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

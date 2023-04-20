@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use App\Models\Charge;
+use App\Models\Invoice;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -24,11 +24,13 @@ class ProcessDailyCharges implements ShouldQueue
      */
     public function handle(): void
     {
-        Charge::where('debt_due_date', '>=', now()->addDays(7)->startOfDay())
+        Invoice::with('customer')
+            ->where('paid_at', null)
+            ->where('debt_due_date', '>=', now()->addDays(7)->startOfDay())
             ->where('debt_due_date', '<=', now()->addDays(7)->endOfDay())
             ->chunk(100, function (Collection $charges): void {
-                foreach ($charges as $charge) {
-                    ChargeCustomer::dispatch($charge);
+                foreach ($charges as $invoice) {
+                    ChargeCustomer::dispatch($invoice);
                 }
             })
         ;
