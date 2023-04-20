@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreChargeRequest;
+use App\Jobs\ProcessChargesFile;
 use Illuminate\Http\Response;
 
 class ChargeController extends Controller
@@ -16,6 +17,8 @@ class ChargeController extends Controller
         }
 
         $request->file('charges')->store('charge_files');
+
+        ProcessChargesFile::dispatch();
 
         return response()->json([
             'message' => "A lista de cobrança está sendo processada.\nVocê receberá uma notificação quando o processamento for concluído.",

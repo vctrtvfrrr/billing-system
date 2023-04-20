@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Jobs\ProcessChargesFile;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -15,6 +17,7 @@ class ChargeControllerTest extends TestCase
     public function store(): void
     {
         Storage::fake();
+        Queue::fake();
 
         $chargesFile = UploadedFile::fake()->createWithContent(
             'charges.csv',
@@ -28,5 +31,7 @@ class ChargeControllerTest extends TestCase
         );
 
         $response->assertStatus(Response::HTTP_CREATED);
+
+        Queue::assertPushed(ProcessChargesFile::class);
     }
 }
