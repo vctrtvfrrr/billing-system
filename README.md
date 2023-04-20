@@ -30,21 +30,15 @@ npm run prepare
 Para executar o app em ambiente de desenvolvimento, você deve executar estes comandos:
 
 ```bash
-composer start
+php artisan serve
 ```
 
-Ou você pode usar o `docker compose` para executar o app com `Docker`:
-
-```bash
-docker compose up -d
-```
-
-Depois disso, abra `http://localhost:8080` em seu navegador.
+Depois disso, abra `http://localhost:8000` em seu navegador.
 
 ## Testando
 
 Execute este comando no diretório raiz do app para executar a suíte de testes:
 
 ```bash
-composer test
+php artisan test
 ```
