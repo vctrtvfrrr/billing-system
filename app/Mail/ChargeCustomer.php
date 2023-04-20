@@ -35,7 +35,6 @@ class ChargeCustomer extends Mailable
     {
         return new Envelope(
             to: [new Address($this->charge->email, $this->charge->name)],
-            bcc: [new Address(config('mail.from.address'), config('mail.from.name'))],
             subject: 'Sua fatura chegou',
         );
     }

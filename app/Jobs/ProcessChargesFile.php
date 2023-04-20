@@ -6,7 +6,6 @@ namespace App\Jobs;
 
 use App\Models\Charge;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -15,7 +14,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class ProcessChargesFile implements ShouldQueue, ShouldBeUnique
+class ProcessChargesFile implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;

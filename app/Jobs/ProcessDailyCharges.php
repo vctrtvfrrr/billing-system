@@ -24,7 +24,8 @@ class ProcessDailyCharges implements ShouldQueue
      */
     public function handle(): void
     {
-        Charge::where('debt_due_date', now()->addDays(7))
+        Charge::where('debt_due_date', '>=', now()->addDays(7)->startOfDay())
+            ->where('debt_due_date', '<=', now()->addDays(7)->endOfDay())
             ->chunk(100, function (Collection $charges): void {
                 foreach ($charges as $charge) {
                     ChargeCustomer::dispatch($charge);

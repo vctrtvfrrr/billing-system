@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->job(new ProcessDailyCharges())->dailyAt('9:00');
+        // $schedule->job(new ProcessDailyCharges())->dailyAt('9:00');
+        $schedule->job(new ProcessDailyCharges())->everyMinute(); // Para testes
     }
 
     /**
