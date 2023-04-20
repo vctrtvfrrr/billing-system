@@ -6,6 +6,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ChargeControllerTest extends TestCase
@@ -13,6 +14,8 @@ class ChargeControllerTest extends TestCase
     /** @test */
     public function store(): void
     {
+        Storage::fake();
+
         $chargesFile = UploadedFile::fake()->createWithContent(
             'charges.csv',
             file_get_contents(base_path('tests/data/example_data.csv'))
