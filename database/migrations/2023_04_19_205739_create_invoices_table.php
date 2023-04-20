@@ -19,7 +19,7 @@ return new class() extends Migration {
             $table->unsignedInteger('debt_id');
             $table->unsignedDecimal(column: 'debt_amount', total: 10, places: 2);
             $table->date('debt_due_date');
-            $table->date('paid_at')->nullable();
+            $table->datetime('paid_at')->nullable();
             $table->string('filename', 100)->nullable();
             $table->timestamps();
         });

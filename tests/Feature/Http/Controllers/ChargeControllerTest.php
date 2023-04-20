@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Feature\Http\Controllers;
 
 use App\Jobs\ProcessChargesFile;
-use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
@@ -24,13 +23,14 @@ class ChargeControllerTest extends TestCase
             file_get_contents(base_path('tests/data/example_data.csv'))
         );
 
-        $response = $this->post(
-            route('charges'),
-            ['charges' => $chargesFile],
-            ['Accept'  => 'application/json', 'Content-Type' => 'multipart/form-data']
-        );
-
-        $response->assertStatus(Response::HTTP_CREATED);
+        $this
+            ->post(
+                route('charges'),
+                ['charges' => $chargesFile],
+                ['Accept'  => 'application/json', 'Content-Type' => 'multipart/form-data']
+            )
+            ->assertCreated()
+        ;
 
         Queue::assertPushed(ProcessChargesFile::class);
     }

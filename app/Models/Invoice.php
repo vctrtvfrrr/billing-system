@@ -34,7 +34,7 @@ class Invoice extends Model
         'debt_id'       => 'integer',
         'debt_amount'   => 'float',
         'debt_due_date' => 'date',
-        'paid_at'       => 'date',
+        'paid_at'       => 'datetime',
     ];
 
     public function customer(): BelongsTo
