@@ -7,7 +7,7 @@ namespace App\Services;
 use App\Models\Charge;
 use App\Models\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class InvoiceService
