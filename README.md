@@ -1,44 +1,31 @@
 # Billing System
 
-[![Coverage Status](https://coveralls.io/repos/github/vctrtvfrrr/billing-system/badge.svg?branch=master)](https://coveralls.io/github/vctrtvfrrr/billing-system?branch=master)
+Financial control service.
 
-PoC de um sistema de cobranças baseado em disparos de e-mails com boletos.
+## Setup
 
-## Instalando
-
-Para instalar o app, clone este repositório em seu ambiente local:
+Make sure to install the dependencies:
 
 ```bash
-git clone git@github.com:vctrtvfrrr/billing-system.git
-```
-
-Em seguida, instale as dependências do projeto com o Composer e NPM:
-
-```bash
-composer install
 npm install
 ```
 
-O NPM é utilizado para instalar o Husky, usado para executar alguns hooks do Git. Prepare o ambiente com o Husky executando o seguinte comando:
+Start the development server on `http://localhost:3000`
 
 ```bash
-npm run prepare
+npm run dev
 ```
 
-## Executando
+## Production
 
-Para executar o app em ambiente de desenvolvimento, você deve executar estes comandos:
+Build the application for production:
 
 ```bash
-php artisan serve
+npm run build
 ```
 
-Depois disso, abra `http://localhost:8000` em seu navegador.
-
-## Testando
-
-Execute este comando no diretório raiz do app para executar a suíte de testes:
+Locally preview production build:
 
 ```bash
-php artisan test
+npm run preview
 ```
