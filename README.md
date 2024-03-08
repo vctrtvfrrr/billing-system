@@ -7,13 +7,15 @@ Financial control service.
 Make sure to install the dependencies:
 
 ```bash
-npm install
+bun install
 ```
 
-Start the development server on `http://localhost:3000`
+## Development Server
+
+Start the development server on `http://localhost:3000`:
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 ## Production
@@ -21,11 +23,11 @@ npm run dev
 Build the application for production:
 
 ```bash
-npm run build
+bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-npm run preview
+bun run preview
 ```
