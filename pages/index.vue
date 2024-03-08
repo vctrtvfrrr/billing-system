@@ -22,5 +22,9 @@
 
       <button type="submit">Cadastrar</button>
     </form>
+
+    <hr />
+
+    <ExpensesTable />
   </div>
 </template>
