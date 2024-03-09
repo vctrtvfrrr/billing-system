@@ -25,6 +25,6 @@
 
     <hr />
 
-    <ExpensesTable />
+    <TransactionsTable />
   </div>
 </template>

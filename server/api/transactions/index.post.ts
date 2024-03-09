@@ -1,10 +1,10 @@
-import { expenses } from '~/server/database/schema'
+import { transactions } from '~/server/database/schema'
 
 export default eventHandler(async (event) => {
   const { value, date, description } = await readBody(event)
 
   const expense = await useDb()
-    .insert(expenses)
+    .insert(transactions)
     .values({
       value,
       date,
