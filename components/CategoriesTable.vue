@@ -1,13 +1,14 @@
 <script setup lang="ts">
-const { data: transactions } = await useAsyncData('transactions', () => $fetch('/api/transactions'))
+const { data: categories, refresh } = await useAsyncData('categories', () =>
+  $fetch('/api/categories')
+)
 const columns = [
   { key: 'type', label: 'Tipo' },
-  { key: 'date', label: 'Data' },
-  { key: 'value', label: 'Valor' },
-  { key: 'description', label: 'Descrição' },
+  { key: 'icon', label: 'Ícone' },
+  { key: 'label', label: 'Categoria' },
   { key: 'actions' },
 ]
-const items = (row: Transaction) => [
+const items = (row: Category) => [
   [
     {
       label: 'Editar',
@@ -19,13 +20,25 @@ const items = (row: Transaction) => [
     {
       label: 'Apagar',
       icon: 'i-heroicons-trash-20-solid',
+      click: () => deleteItem(row.id),
     },
   ],
 ]
+
+async function deleteItem(itemId: number) {
+  if (!confirm('Tem certeza que deseja remover esta categoria?')) return
+
+  try {
+    await $fetch(`/api/categories/${itemId}`, { method: 'DELETE' })
+    await refresh()
+  } catch (err) {
+    console.log(err)
+  }
+}
 </script>
 
 <template>
-  <UTable :columns="columns" :rows="transactions">
+  <UTable :columns="columns" :rows="categories">
     <template #actions-data="{ row }">
       <UDropdown :items="items(row)">
         <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />

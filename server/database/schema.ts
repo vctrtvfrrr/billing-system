@@ -1,7 +1,7 @@
 import { sql } from 'drizzle-orm'
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
+import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import { id, timestamps } from '../utils/dbFields'
-import { TransactionType } from '../../types'
+import { TransactionType } from '../../utils/types'
 
 export const categories = sqliteTable('categories', {
   id,
