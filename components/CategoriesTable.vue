@@ -1,7 +1,10 @@
 <script setup lang="ts">
-const { data: categories, refresh } = await useAsyncData('categories', () =>
-  $fetch('/api/categories')
-)
+const store = useCategoriesStore()
+
+await useAsyncData('categories', () => store.fetchCategories())
+
+const { categories } = storeToRefs(store)
+
 const columns = [
   { key: 'type', label: 'Tipo' },
   { key: 'icon', label: 'Ícone' },
@@ -30,7 +33,7 @@ async function deleteItem(itemId: number) {
 
   try {
     await $fetch(`/api/categories/${itemId}`, { method: 'DELETE' })
-    await refresh()
+    await store.fetchCategories()
   } catch (err) {
     console.log(err)
   }

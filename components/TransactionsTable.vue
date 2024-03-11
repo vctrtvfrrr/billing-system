@@ -1,5 +1,10 @@
 <script setup lang="ts">
-const { data: transactions } = await useAsyncData('transactions', () => $fetch('/api/transactions'))
+const store = useTransactionsStore()
+
+await useAsyncData('transactions', () => store.fetchTransactions())
+
+const { transactions } = storeToRefs(store)
+
 const columns = [
   { key: 'type', label: 'Tipo' },
   { key: 'date', label: 'Data' },

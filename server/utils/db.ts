@@ -10,4 +10,6 @@ export function useDb() {
 }
 
 export type Category = typeof schema.categories.$inferSelect
+export type CategoryInsert = typeof schema.categories.$inferInsert
 export type Transaction = typeof schema.transactions.$inferSelect
+export type TransactionInsert = typeof schema.transactions.$inferInsert

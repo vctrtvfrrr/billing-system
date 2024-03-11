@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 defineEmits(['close'])
 
+const store = useCategoriesStore()
+
 const transactionTypes = [
   {
     value: TransactionType.REVENUE,
@@ -19,11 +21,7 @@ const state = reactive({
 })
 
 async function onSubmit() {
-  const data = await $fetch('/api/categories', {
-    method: 'POST',
-    body: state,
-  })
-  console.log(data)
+  await store.storeCategory(state)
 }
 </script>
 
@@ -57,4 +55,3 @@ async function onSubmit() {
     </UCard>
   </UForm>
 </template>
-~/server/utils/types
