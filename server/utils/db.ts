@@ -1,13 +1,19 @@
 import { Database } from 'bun:sqlite'
-import { drizzle } from 'drizzle-orm/bun-sqlite'
+import { BunSQLiteDatabase, drizzle } from 'drizzle-orm/bun-sqlite'
 import * as schema from '../database/schema'
 
-export const tables = schema
+let sqlite: Database | null
+let db: BunSQLiteDatabase<typeof schema> | null
 
 export function useDb() {
-  const sqlite = new Database('sqlite.db')
-  return drizzle(sqlite, { schema })
+  if (db) return db
+  const config = useRuntimeConfig()
+  sqlite = new Database(config.db)
+  db = drizzle(sqlite, { schema })
+  return db
 }
+
+export const tables = schema
 
 export type Category = typeof schema.categories.$inferSelect
 export type CategoryInsert = typeof schema.categories.$inferInsert
