@@ -14,3 +14,6 @@ export const invoices = sqliteTable('invoices', {
   dueDay: integer('due_day', { mode: 'number' }).notNull(),
   ...timestamps,
 })
+
+export type Invoice = typeof invoices.$inferSelect
+export type NewInvoice = typeof invoices.$inferInsert

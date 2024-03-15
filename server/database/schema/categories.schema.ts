@@ -9,3 +9,6 @@ export const categories = sqliteTable('categories', {
   icon: text('icon', { length: 50 }).notNull(),
   ...timestamps,
 })
+
+export type Category = typeof categories.$inferSelect
+export type NewCategory = typeof categories.$inferInsert

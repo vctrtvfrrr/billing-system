@@ -8,3 +8,6 @@ export const accounts = sqliteTable('accounts', {
   color: text('color').notNull(),
   ...timestamps,
 })
+
+export type Account = typeof accounts.$inferSelect
+export type NewAccount = typeof accounts.$inferInsert

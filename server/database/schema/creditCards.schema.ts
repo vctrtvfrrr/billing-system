@@ -13,3 +13,6 @@ export const creditCards = sqliteTable('credit_cards', {
   dueDay: integer('due_day', { mode: 'number' }).notNull(),
   ...timestamps,
 })
+
+export type CreditCard = typeof creditCards.$inferSelect
+export type NewCreditCard = typeof creditCards.$inferInsert

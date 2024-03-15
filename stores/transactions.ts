@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Transaction, TransactionInsert } from '~/server/utils/db'
+import type { NewTransaction, Transaction } from '~/server/database/schema/transactions.schema'
 
 export const useTransactionsStore = defineStore('transactions', () => {
   const transactions = ref<Transaction[]>([])
@@ -8,7 +8,7 @@ export const useTransactionsStore = defineStore('transactions', () => {
     transactions.value = await $fetch<Transaction[]>('/api/transactions')
   }
 
-  async function storeTransaction(transactionData: TransactionInsert) {
+  async function storeTransaction(transactionData: NewTransaction) {
     console.log(transactionData)
 
     const transaction = await $fetch('/api/transactions', {

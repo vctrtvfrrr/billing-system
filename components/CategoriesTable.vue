@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Category } from '~/server/database/schema/categories.schema'
+
 const store = useCategoriesStore()
 
 await useAsyncData('categories', () => store.fetchCategories())

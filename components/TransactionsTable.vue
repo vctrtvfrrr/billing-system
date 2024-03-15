@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Transaction } from '~/server/database/schema/transactions.schema'
+
 const store = useTransactionsStore()
 
 await useAsyncData('transactions', () => store.fetchTransactions())
@@ -12,27 +14,31 @@ const columns = [
   { key: 'description', label: 'Descrição' },
   { key: 'actions' },
 ]
-const items = (row: Transaction) => [
-  [
-    {
-      label: 'Editar',
-      icon: 'i-heroicons-pencil-square-20-solid',
-      click: () => console.log('Edit', row.id),
-    },
-  ],
-  [
-    {
-      label: 'Apagar',
-      icon: 'i-heroicons-trash-20-solid',
-    },
-  ],
-]
+
+function generateActionsList(transaction: Transaction) {
+  return [
+    [
+      {
+        label: 'Editar',
+        icon: 'i-heroicons-pencil-square-20-solid',
+        click: () => console.log('Edit', transaction.id),
+      },
+    ],
+    [
+      {
+        label: 'Apagar',
+        icon: 'i-heroicons-trash-20-solid',
+        click: () => console.log('Delete', transaction.id),
+      },
+    ],
+  ]
+}
 </script>
 
 <template>
   <UTable :columns="columns" :rows="transactions">
     <template #actions-data="{ row }">
-      <UDropdown :items="items(row)">
+      <UDropdown :items="generateActionsList(row)">
         <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
       </UDropdown>
     </template>

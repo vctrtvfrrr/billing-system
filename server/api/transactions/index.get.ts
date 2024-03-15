@@ -1,5 +1,7 @@
-import { transactions } from '~/server/database/schema'
+import { transactions as transactionsTable } from '~/server/database/schema'
 
 export default eventHandler(() => {
-  return useDb().select().from(transactions)
+  const transactions = useDb().select().from(transactionsTable)
+  console.log(transactions)
+  return transactions
 })

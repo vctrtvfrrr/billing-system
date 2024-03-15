@@ -18,3 +18,6 @@ export const transactions = sqliteTable('transactions', {
   }),
   ...timestamps,
 })
+
+export type Transaction = typeof transactions.$inferSelect
+export type NewTransaction = typeof transactions.$inferInsert

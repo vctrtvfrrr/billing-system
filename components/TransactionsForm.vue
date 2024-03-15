@@ -15,7 +15,8 @@ const transactionTypes = [
 ]
 
 const state = reactive({
-  value: '',
+  accountId: 0,
+  value: 0,
   date: '',
   type: TransactionType.EXPENSES,
   category: '',
