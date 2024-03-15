@@ -1,7 +1,17 @@
+import { useLogger } from '@nuxt/kit'
 import { migrate } from 'drizzle-orm/bun-sqlite/migrator'
 
 export default defineNitroPlugin(async () => {
-  if (!import.meta.dev) return
+  const logger = useLogger('drizzle')
 
-  migrate(useDb(), { migrationsFolder: 'server/database/migrations' })
+  try {
+    await migrate(useDb(), { migrationsFolder: '../database/migrations' })
+    logger.success('schema and db migrated')
+  } catch (err) {
+    if (err instanceof Error) {
+      logger.error(err.message)
+    } else {
+      throw err
+    }
+  }
 })
