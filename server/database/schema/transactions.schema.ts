@@ -21,3 +21,4 @@ export const transactions = sqliteTable('transactions', {
 
 export type Transaction = typeof transactions.$inferSelect
 export type NewTransaction = typeof transactions.$inferInsert
+export type EditTransaction = Partial<Transaction>

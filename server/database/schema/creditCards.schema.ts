@@ -16,3 +16,4 @@ export const creditCards = sqliteTable('credit_cards', {
 
 export type CreditCard = typeof creditCards.$inferSelect
 export type NewCreditCard = typeof creditCards.$inferInsert
+export type EditCreditCard = Partial<CreditCard>

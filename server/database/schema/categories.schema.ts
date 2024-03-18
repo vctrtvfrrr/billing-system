@@ -7,8 +7,10 @@ export const categories = sqliteTable('categories', {
   type: text('type', { enum: [TransactionType.REVENUE, TransactionType.EXPENSES] }).notNull(),
   label: text('label', { length: 50 }).notNull(),
   icon: text('icon', { length: 50 }).notNull(),
+  color: text('color', { length: 7 }).notNull(),
   ...timestamps,
 })
 
 export type Category = typeof categories.$inferSelect
 export type NewCategory = typeof categories.$inferInsert
+export type EditCategory = Partial<Category>

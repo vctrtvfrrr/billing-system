@@ -17,3 +17,4 @@ export const invoices = sqliteTable('invoices', {
 
 export type Invoice = typeof invoices.$inferSelect
 export type NewInvoice = typeof invoices.$inferInsert
+export type EditInvoice = Partial<Invoice>
