@@ -2,6 +2,7 @@
 import type { Category } from '~/server/database/schema/categories.schema'
 
 const store = useCategoriesStore()
+const toast = useToast()
 
 await useAsyncData('categories', () => store.fetchCategories())
 
@@ -13,18 +14,36 @@ const columns = [
   { key: 'label', label: 'Categoria' },
   { key: 'actions' },
 ]
+
+const isLoading = ref(false)
+const isFormModalOpen = ref(false)
+const currentCategory = ref<Category | null>()
+
 const items = (row: Category) => [
   [
     {
       label: 'Editar',
-      icon: 'i-heroicons-pencil-square-20-solid',
-      click: () => console.log('Edit', row.id),
+      icon: 'i-mdi-file-edit-outline',
+      async click() {
+        try {
+          isLoading.value = true
+
+          const category = await $fetch(`/api/categories/${row.id}`)
+          currentCategory.value = category
+
+          isFormModalOpen.value = true
+        } catch (err) {
+          console.log(err)
+        } finally {
+          isLoading.value = false
+        }
+      },
     },
   ],
   [
     {
       label: 'Apagar',
-      icon: 'i-heroicons-trash-20-solid',
+      icon: 'i-mdi-delete-outline',
       click: () => deleteItem(row.id),
     },
   ],
@@ -34,20 +53,40 @@ async function deleteItem(itemId: number) {
   if (!confirm('Tem certeza que deseja remover esta categoria?')) return
 
   try {
-    await $fetch(`/api/categories/${itemId}`, { method: 'DELETE' })
-    await store.fetchCategories()
+    await store.deleteCategory(itemId)
   } catch (err) {
-    console.log(err)
+    if (err instanceof Error) {
+      toast.add({
+        color: 'red',
+        title: 'Ocorreu um erro',
+        icon: 'i-heroicons-x-circle',
+        description: err.message,
+      })
+    }
   }
 }
 </script>
 
 <template>
   <UTable :columns="columns" :rows="categories">
+    <template #icon-data="{ row }">
+      <UBadge :style="`background-color: ${row.color}`">
+        <UIcon :name="row.icon" class="text-white" dynamic />
+      </UBadge>
+    </template>
+
     <template #actions-data="{ row }">
       <UDropdown :items="items(row)">
-        <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+        <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-vertical" />
       </UDropdown>
     </template>
   </UTable>
+
+  <Teleport to="body">
+    <UModal v-model="isFormModalOpen">
+      <CategoriesForm :category="currentCategory" @close="isFormModalOpen = false" />
+    </UModal>
+
+    <PageLoading v-show="isLoading" />
+  </Teleport>
 </template>

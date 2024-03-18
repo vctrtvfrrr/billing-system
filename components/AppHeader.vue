@@ -9,7 +9,7 @@
     >
       <div class="flex items-center gap-2 sm:gap-4">
         <NuxtLink class="block flex-shrink-0" to="/">
-          <UIcon name="i-heroicons-currency-dollar" class="size-4" />
+          <UIcon name="i-heroicons-banknotes" />
         </NuxtLink>
       </div>
 

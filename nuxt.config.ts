@@ -6,4 +6,7 @@ export default defineNuxtConfig({
     rootDir: __dirname,
     db: process.env.DATABASE_URL || 'sqlite.db',
   },
+  ui: {
+    icons: ['mdi', 'heroicons'],
+  },
 })

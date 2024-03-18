@@ -1,10 +1,14 @@
 import { categories } from '~/server/database/schema'
 
 export default eventHandler(async (event) => {
-  const { label, type, icon } = await readBody(event)
+  const { label, type, icon, color } = await readBody(event)
 
   try {
-    const expense = await useDb().insert(categories).values({ label, type, icon }).returning()
+    const expense = await useDb()
+      .insert(categories)
+      .values({ label, type, icon, color })
+      .returning()
+
     return expense[0]
   } catch (err) {
     throw createError({
