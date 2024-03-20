@@ -1,10 +1,7 @@
+import { join } from 'path'
 import type { Config } from 'tailwindcss'
 
 export default <Partial<Config>>{
-  content: [],
+  content: [join(__dirname, 'stores/**/*.ts')],
   darkMode: 'class',
-  theme: {
-    extend: {},
-  },
-  plugins: [],
 }
