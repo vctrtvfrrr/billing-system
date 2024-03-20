@@ -2,6 +2,7 @@ CREATE TABLE `transactions` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`account_id` integer NOT NULL,
 	`type` text,
+	`status` text DEFAULT 'open',
 	`value` integer NOT NULL,
 	`date` text DEFAULT CURRENT_TIMESTAMP,
 	`description` text,
