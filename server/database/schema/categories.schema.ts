@@ -1,6 +1,6 @@
 import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
-import { TransactionType } from '../../../utils/types'
-import { id, timestamps } from '../../utils/dbFields'
+import { TransactionType } from '../../../types/enums.d'
+import { deletedAt, id, timestamps } from '../../utils/dbFields'
 
 export const categories = sqliteTable('categories', {
   id,
@@ -9,6 +9,7 @@ export const categories = sqliteTable('categories', {
   icon: text('icon', { length: 50 }).notNull(),
   color: text('color', { length: 7 }).notNull(),
   ...timestamps,
+  deletedAt,
 })
 
 export type Category = typeof categories.$inferSelect

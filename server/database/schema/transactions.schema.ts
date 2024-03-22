@@ -1,8 +1,8 @@
 import { sql } from 'drizzle-orm'
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
-import { TransactionStatus, TransactionType } from '../../../utils/types'
-import { id, timestamps } from '../../utils/dbFields'
 import { accounts, categories } from '.'
+import { TransactionStatus, TransactionType } from '../../../types/enums.d'
+import { deletedAt, id, timestamps } from '../../utils/dbFields'
 
 export const transactions = sqliteTable('transactions', {
   id,
@@ -22,6 +22,7 @@ export const transactions = sqliteTable('transactions', {
     onDelete: 'set null',
   }),
   ...timestamps,
+  deletedAt,
 })
 
 export type Transaction = typeof transactions.$inferSelect

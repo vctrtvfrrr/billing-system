@@ -1,5 +1,5 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
-import { id, timestamps } from '../../utils/dbFields'
+import { deletedAt, id, timestamps } from '../../utils/dbFields'
 
 export const accounts = sqliteTable('accounts', {
   id,
@@ -7,6 +7,7 @@ export const accounts = sqliteTable('accounts', {
   openingBalance: integer('opening_balance', { mode: 'number' }).notNull(),
   color: text('color', { length: 7 }).notNull(),
   ...timestamps,
+  deletedAt,
 })
 
 export type Account = typeof accounts.$inferSelect
