@@ -1,46 +1,106 @@
 <script setup lang="ts">
 import type { Transaction } from '~/server/database/schema/transactions.schema'
+import { TransactionStatus, TransactionType } from '~/types/enums.d'
 
 const store = useTransactionsStore()
+const toast = useToast()
 
 await useAsyncData('transactions', () => store.fetchTransactions())
 
-const { transactions } = storeToRefs(store)
+const { formattedTransactions, isLoading } = storeToRefs(store)
+
+const isFormModalOpen = ref(false)
+const currentTransaction = ref<Transaction | null>()
 
 const columns = [
-  { key: 'type', label: 'Tipo' },
+  { key: 'status', label: 'Situação' },
   { key: 'date', label: 'Data' },
-  { key: 'value', label: 'Valor' },
   { key: 'description', label: 'Descrição' },
+  { key: 'category', label: 'Categoria' },
+  { key: 'account', label: 'Conta' },
+  { key: 'value', label: 'Valor', class: 'text-right' },
   { key: 'actions' },
 ]
 
-function generateActionsList(transaction: Transaction) {
-  return [
-    [
-      {
-        label: 'Editar',
-        icon: 'i-heroicons-pencil-square-20-solid',
-        click: () => console.log('Edit', transaction.id),
-      },
-    ],
-    [
-      {
-        label: 'Apagar',
-        icon: 'i-heroicons-trash-20-solid',
-        click: () => console.log('Delete', transaction.id),
-      },
-    ],
-  ]
+async function deleteItem(itemId: number) {
+  if (!confirm('Tem certeza que deseja remover esta transação?')) return
+
+  try {
+    await store.deleteTransaction(itemId)
+  } catch (err) {
+    if (err instanceof Error) {
+      toast.add({
+        color: 'red',
+        title: 'Ocorreu um erro',
+        icon: 'i-heroicons-x-circle',
+        description: err.message,
+      })
+    }
+  }
 }
 </script>
 
 <template>
-  <UTable :columns="columns" :rows="transactions">
+  <UTable
+    :columns="columns"
+    :rows="formattedTransactions"
+    :loading="isLoading"
+    :ui="{ td: { padding: 'px-4 py-0' } }"
+  >
+    <template #status-data="{ row }">
+      <UIcon
+        v-if="row.status === TransactionStatus.OPEN"
+        name="i-heroicons-x-circle"
+        class="text-red-500"
+      />
+      <UIcon
+        v-if="row.status === TransactionStatus.PAID"
+        name="i-heroicons-check-circle"
+        class="text-green-500"
+      />
+    </template>
+
+    <template #value-data="{ row }">
+      <span :class="row.type === TransactionType.REVENUE ? 'text-green-500' : 'text-red-500'">{{
+        row.value.value
+      }}</span>
+    </template>
+
+    <template #category-data="{ row }">
+      <UIcon :name="row.category.icon" :style="`color: ${row.category.color}`" dynamic />
+      {{ row.category.label }}
+    </template>
+
     <template #actions-data="{ row }">
-      <UDropdown :items="generateActionsList(row)">
-        <UButton color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-      </UDropdown>
+      <UTooltip text="Editar">
+        <UButton
+          color="gray"
+          variant="link"
+          icon="i-heroicons-pencil"
+          size="xs"
+          @click="(currentTransaction = row), (isFormModalOpen = true)"
+        />
+      </UTooltip>
+      <UTooltip text="Apagar">
+        <UButton
+          color="red"
+          variant="link"
+          icon="i-heroicons-trash"
+          size="xs"
+          @click="deleteItem(row.id)"
+        />
+      </UTooltip>
     </template>
   </UTable>
+
+  <Teleport to="body">
+    <UModal v-model="isFormModalOpen">
+      <TransactionsForm
+        :transaction="currentTransaction"
+        @close="(isFormModalOpen = false), (currentTransaction = null)"
+      />
+    </UModal>
+
+    <PageLoading v-show="store.isLoading" />
+  </Teleport>
 </template>

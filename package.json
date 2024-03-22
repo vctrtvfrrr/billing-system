@@ -24,6 +24,7 @@
     "@iconify-json/mdi": "^1.1.64",
     "@nuxt/ui": "^2.14.2",
     "@pinia/nuxt": "^0.5.1",
+    "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.1",
     "nuxt": "^3.11.0",
